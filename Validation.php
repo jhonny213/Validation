@@ -90,14 +90,14 @@
             if($name == 'array'){
                 
                 if(!is_array($this->value)){
-                    $this->errors[] = 'Formato campo '.$this->name.' non valido.';
+                    $this->errors[$this->name] = 'Formato campo '.$this->name.' non valido.';
                 }
             
             }else{
             
                 $regex = '/^('.$this->patterns[$name].')$/u';
                 if($this->value != '' && !preg_match($regex, $this->value)){
-                    $this->errors[] = 'Formato campo '.$this->name.' non valido.';
+                    $this->errors[$this->name] = 'Formato campo '.$this->name.' non valido.';
                 }
                 
             }
@@ -115,7 +115,7 @@
             
             $regex = '/^('.$pattern.')$/u';
             if($this->value != '' && !preg_match($regex, $this->value)){
-                $this->errors[] = 'Formato campo '.$this->name.' non valido.';
+                $this->errors[$this->name] = 'Formato campo '.$this->name.' non valido.';
             }
             return $this;
             
@@ -129,7 +129,7 @@
         public function required(){
             
             if((isset($this->file) && $this->file['error'] == 4) || ($this->value == '' || $this->value == null)){
-                $this->errors[] = 'Campo '.$this->name.' obbligatorio.';
+                $this->errors[$this->name] = 'Campo '.$this->name.' obbligatorio.';
             }            
             return $this;
             
@@ -147,13 +147,13 @@
             if(is_string($this->value)){
                 
                 if(strlen($this->value) < $length){
-                    $this->errors[] = 'Valore campo '.$this->name.' inferiore al valore minimo';
+                    $this->errors[$this->name] = 'Valore campo '.$this->name.' inferiore al valore minimo';
                 }
            
             }else{
                 
                 if($this->value < $length){
-                    $this->errors[] = 'Valore campo '.$this->name.' inferiore al valore minimo';
+                    $this->errors[$this->name] = 'Valore campo '.$this->name.' inferiore al valore minimo';
                 }
                 
             }
@@ -173,13 +173,13 @@
             if(is_string($this->value)){
                 
                 if(strlen($this->value) > $length){
-                    $this->errors[] = 'Valore campo '.$this->name.' superiore al valore massimo';
+                    $this->errors[$this->name] = 'Valore campo '.$this->name.' superiore al valore massimo';
                 }
            
             }else{
                 
                 if($this->value > $length){
-                    $this->errors[] = 'Valore campo '.$this->name.' superiore al valore massimo';
+                    $this->errors[$this->name] = 'Valore campo '.$this->name.' superiore al valore massimo';
                 }
                 
             }
@@ -197,7 +197,7 @@
         public function equal($value){
         
             if($this->value != $value){
-                $this->errors[] = 'Valore campo '.$this->name.' non corrispondente.';
+                $this->errors[$this->name] = 'Valore campo '.$this->name.' non corrispondente.';
             }
             return $this;
             
@@ -212,7 +212,7 @@
         public function maxSize($size){
             
             if($this->file['error'] != 4 && $this->file['size'] > $size){
-                $this->errors[] = 'Il file '.$this->name.' supera la dimensione massima di '.number_format($size / 1048576, 2).' MB.';
+                $this->errors[$this->name] = 'Il file '.$this->name.' supera la dimensione massima di '.number_format($size / 1048576, 2).' MB.';
             }
             return $this;
             
@@ -227,7 +227,7 @@
         public function ext($extension){
 
             if($this->file['error'] != 4 && pathinfo($this->file['name'], PATHINFO_EXTENSION) != $extension && strtoupper(pathinfo($this->file['name'], PATHINFO_EXTENSION)) != $extension){
-                $this->errors[] = 'Il file '.$this->name.' non è un '.$extension.'.';
+                $this->errors[$this->name] = 'Il file '.$this->name.' non è un '.$extension.'.';
             }
             return $this;
             
